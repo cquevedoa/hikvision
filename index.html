@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Libro de consulta – HikCentral y TV de Salón</title>
+<style>
+:root{--bg:#f6f4f1;--page:#fff;--ink:#1d1d1f;--mute:#6b6b70;--line:#e3e0db;--acc:#c8102e;--accbg:#fdecef;--note:#fff8e1;--code:#f1efec}
+@media (prefers-color-scheme:dark){:root{--bg:#1a1a1c;--page:#242427;--ink:#ececee;--mute:#9b9ba2;--line:#3a3a3f;--acc:#ff5a73;--accbg:#3a2228;--note:#3a3320;--code:#2d2d31}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font:15px/1.6 "Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+#app{display:flex;height:100%;min-height:640px}
+aside{width:290px;flex:none;border-right:1px solid var(--line);background:var(--page);display:flex;flex-direction:column}
+.brand{padding:14px 16px;border-bottom:1px solid var(--line)}
+.brand b{display:block;color:var(--acc);font-size:16px}
+.brand span{font-size:12px;color:var(--mute)}
+.tabs{display:flex;gap:6px;padding:10px 12px 0}
+.tabs button{flex:1;padding:7px 4px;border:1px solid var(--line);background:none;color:var(--ink);border-radius:8px;cursor:pointer;font-size:12px}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+#q{margin:10px 12px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px}
+#toc{overflow:auto;flex:1;padding:0 8px 12px}
+#toc a{display:block;padding:8px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px;cursor:pointer}
+#toc a:hover{background:var(--accbg)}
+#toc a.on{background:var(--accbg);color:var(--acc);font-weight:600}
+#toc small{color:var(--mute);margin-right:6px}
+main{flex:1;display:flex;flex-direction:column;min-width:0}
+#top{display:none;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--page)}
+#top button{border:1px solid var(--line);background:none;color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+#scroll{flex:1;overflow:auto;padding:22px}
+#page{max-width:820px;margin:0 auto;background:var(--page);border:1px solid var(--line);border-radius:6px;padding:30px 34px;box-shadow:0 4px 18px rgba(0,0,0,.08);animation:flip .35s ease}
+@keyframes flip{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.kick{color:var(--acc);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+h1{margin:4px 0 14px;font-size:26px;line-height:1.2}
+h2{font-size:17px;margin:24px 0 6px;color:var(--acc)}
+p{margin:8px 0}
+ol,ul{padding-left:22px;margin:8px 0}li{margin:4px 0}
+.note{background:var(--note);border-left:4px solid #e0a800;padding:10px 14px;border-radius:6px;margin:12px 0}
+.tip{background:var(--accbg);border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:12px 0}
+code,.k{background:var(--code);padding:1px 6px;border-radius:5px;font-size:13px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+td,th{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--code)}
+figure{margin:16px 0}
+figure img{max-width:100%;border:1px solid var(--line);border-radius:6px;display:block}
+.ph{border:2px dashed var(--line);border-radius:8px;padding:26px 14px;text-align:center;color:var(--mute);font-size:13px}
+.ph b{display:block;color:var(--ink);margin-bottom:2px}
+figcaption{font-size:12px;color:var(--mute);margin-top:5px}
+.err{border:1px solid var(--line);border-radius:8px;margin:10px 0;overflow:hidden}
+.err>button{all:unset;display:flex;gap:10px;align-items:center;width:100%;padding:11px 14px;cursor:pointer;box-sizing:border-box}
+.err>button:hover{background:var(--accbg)}
+.err .c{background:var(--acc);color:#fff;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700;white-space:nowrap}
+.err .b{padding:0 14px 12px;display:none}.err.open .b{display:block}
+.chip{display:inline-block;font-size:11px;color:var(--mute);border:1px solid var(--line);border-radius:20px;padding:1px 8px;margin-left:auto}
+#nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 22px;border-top:1px solid var(--line);background:var(--page)}
+#nav button{border:0;background:var(--acc);color:#fff;border-radius:8px;padding:9px 16px;cursor:pointer;font-size:14px}
+#nav button:disabled{opacity:.35;cursor:default}
+#nav span{color:var(--mute);font-size:13px;text-align:center}
+.foot{margin-top:26px;font-size:11px;color:var(--mute);border-top:1px solid var(--line);padding-top:8px}
+@media(max-width:760px){aside{position:absolute;z-index:5;height:100%;transform:translateX(-100%);transition:.25s;box-shadow:2px 0 14px rgba(0,0,0,.2)}aside.open{transform:none}#top{display:block}#page{padding:20px 16px}}
+</style>
+</head>
+<body>
+<!--
+=== PREPARACIÓN DE IMÁGENES ===
+1) Guardá las capturas en la carpeta img/ junto a este HTML, con el nombre de cada clave (ej. img/hc_login.png). Se acepta .png o .jpg.
+2) Si falta un archivo, se muestra un recuadro "Imagen pendiente".
+3) Opcional: pegá una URL completa en el objeto IMAGES para sobrescribir una imagen puntual.
+-->
+<div id="app">
+<aside id="side">
+  <div class="brand"><b>Libro de consulta</b><span>Seguridad Electrónica · Farmacity</span></div>
+  <div class="tabs"><button data-m="a" class="on">HikCentral</button><button data-m="b">TV de salón</button></div>
+  <input id="q" type="search" placeholder="Buscar (ej. 40850, zoom, MP4)…">
+  <nav id="toc"></nav>
+</aside>
+<main>
+  <div id="top"><button id="menu">☰ Índice</button></div>
+  <div id="scroll"><article id="page"></article></div>
+  <div id="nav"><button id="prev">← Anterior</button><span id="pos"></span><button id="next">Siguiente →</button></div>
+</main>
+</div>
+<script>
+/* ===== CONFIGURACIÓN DE IMÁGENES: pegá aquí las URLs ===== */
+var IMAGES = {
+  hc_login:"", hc_inicio:"", hc_monitoring:"", hc_division:"", hc_substream:"", hc_playback:"",
+  hc_export:"", hc_movimiento:"", hc_config_display:"", hc_err_40850:"", hc_err_captcha:"",
+  tv_decoder:"", tv_login:"", tv_fullscreen:"", tv_zoom1:"", tv_zoom2:"", tv_menu:"", tv_reorder1:"", tv_reorder2:""
+};
+var NAMES = {
+  hc_login:"Pantalla de inicio de sesión HikCentral (login FCITY)", hc_inicio:"Pantalla inicial del cliente",
+  hc_monitoring:"Módulo Monitoring con árbol de recursos", hc_division:"Panel Window Division",
+  hc_substream:"Vista multicámara (ejemplo de error de live view)", hc_playback:"Playback con calendario",
+  hc_export:"Ventana Export", hc_movimiento:"Detección de movimiento (cuadros verdes)",
+  hc_config_display:"System > Basic Video > Display", hc_err_40850:"Mensaje de error VSM 40850", hc_err_captcha:"Login con código de verificación",
+  tv_decoder:"Frente del decoder con puerto USB resaltado", tv_login:"Pantalla de login del decoder", tv_fullscreen:"Vista con menú HVR y barra inferior",
+  tv_zoom1:"Cámara con botones de acción", tv_zoom2:"Cámara con zoom digital aplicado", tv_menu:"Menú clic derecho > División de ventanas",
+  tv_reorder1:"Arrastrando una cámara", tv_reorder2:"Resultado tras reubicar la cámara"
+};
+var BASE="img/"; /* carpeta de imágenes junto al HTML */
+function ph(k){return '<div class="ph"><b>Imagen pendiente</b>'+NAMES[k]+'<br><code>'+BASE+k+'.png</code></div>'}
+function imgErr(el,k){ if(!el.dataset.t){el.dataset.t=1;el.src=BASE+k+".jpg"} else {el.outerHTML=ph(k)} }
+function img(k,cap){
+  var u=IMAGES[k]||(BASE+k+".png");
+  return '<figure><img loading="lazy" src="'+u+'" alt="'+(cap||NAMES[k])+'" onerror="imgErr(this,\''+k+'\')"><figcaption>'+(cap||NAMES[k])+'</figcaption></figure>';
+}
+function err(code,title,cause,sol,imgk){
+  return '<div class="err" data-s="'+code+' '+title+' '+cause+' '+sol+'"><button><span class="c">'+code+'</span><span>'+title+'</span><span class="chip">+</span></button><div class="b"><p><b>Causa:</b> '+cause+'</p><div class="tip"><b>Solución:</b> '+sol+'</div>'+(imgk?img(imgk):'')+'</div></div>';
+}
+var FOOT='<div class="foot">Elaborado por Carlos Quevedo · v1.0 · Abril 2026 · Seguridad Electrónica Farmacity</div>';
+
+var PAGES=[
+/* ---------- MANUAL A: HIKCENTRAL ---------- */
+{m:"a",n:"1",t:"Primer inicio de sesión",h:
+'<p>Cuando un <b>usuario local</b> inicia sesión por primera vez, debe cambiar la contraseña inicial y establecer una nueva.</p>'+
+'<p>Para los <b>usuarios del dominio FCITY</b>, las contraseñas las administra el responsable de sistemas de Farmacity. Es la misma que usás para Mail, PC, Curiocity, etc., siempre que el usuario esté habilitado para acceder al servidor.</p>'+
+'<h2>1.1 Iniciar sesión con credenciales FCITY\\</h2><ol>'+
+'<li>Doble clic en el ícono de <b>HikCentral Professional Control Client</b> en el escritorio.</li>'+
+'<li>Ingresá tu <b>Nombre de usuario</b> (<code>FCITY\\n_apellido</code>) y <b>Contraseña</b>.</li>'+
+'<li><i>(Opcional)</i> Si la app no recuerda el servidor, hacé clic en <b>Show Server Address</b> e ingresá la <b>Dirección IP o Dominio</b> y el puerto, provistos por la mesa de ayuda o el responsable de seguridad.</li>'+
+'<li>Clic en <b>Log In</b>.</li></ol>'+img("hc_login")},
+{m:"a",n:"2",t:"Pantalla inicial",h:
+'<p>Es el área de trabajo principal tras iniciar sesión. Como usuario estándar accedés a las funciones de monitorización y gestión del sistema.</p>'+img("hc_inicio")+
+'<p>Desde el menú lateral derecho: Tool (VSPlayer, Two-Way Audio, Broadcast, Screen Recording…) y Management (Task Center, Local Picture, Local Recording, <b>System</b>, Help).</p>'},
+{m:"a",n:"3",t:"Monitorización en vivo",h:
+'<p>La monitorización en vivo (<b>Live View</b>) es la función principal para ver las cámaras en tiempo real.</p><ul>'+
+'<li><b>Recursos:</b> listado de cámaras habilitadas para tu usuario.</li>'+
+'<li><b>Ventana de monitorización:</b> normalmente a la izquierda; permite navegar y añadir cámaras, grupos, mapas y otros recursos.</li>'+
+'<li><b>Barra de herramientas principal:</b> accesos a Monitorización en Vivo, Playback, Alarmas, Eventos, Mapas y Sistema (varía según permisos).</li>'+
+'<li><b>Barra de control de visualización:</b> cambia la división de ventanas, inicia grabación manual, captura imágenes, exporta registros y ajusta la visualización.</li>'+
+'<li><b>Panel de eventos/alarmas:</b> ventana emergente o panel lateral con alarmas en tiempo real.</li></ul>'+img("hc_monitoring")+
+'<h2>3.1 Acceder al módulo</h2><p>Clic en el ícono <b>Monitoring</b> de la barra principal.</p>'+
+'<h2>3.2 Seleccionar cámaras</h2><p>En el <b>Panel de Recursos</b> expandí grupos o dispositivos y arrastrá la cámara a una ventana del área de visualización. Para ver un grupo completo, arrastrá el grupo.</p>'+
+'<h2>3.3 Cámaras habilitadas</h2><p>Son las que están en línea y bien configuradas. Si no lo están, la ventana muestra un estado como <i>"Desconectado"</i> o <i>"No hay señal"</i>.</p>'},
+{m:"a",n:"4",t:"Control de visualización",h:
+'<p>Usá la <b>Barra de Control de Visualización</b> para:</p><ul><li>Cambiar la <b>División de ventanas</b> (1x1, 2x2, 3x3…).</li><li>Iniciar o detener la <b>Grabación manual</b>.</li><li>Hacer una <b>Captura de imagen</b> (Snapshot).</li></ul>'+img("hc_division")},
+{m:"a",n:"5",t:"Optimización con muchas cámaras",h:
+'<p>Cargar muchas cámaras a la vez consume Red, CPU y memoria. Estrategias para mejorar el rendimiento:</p>'+
+'<h2>5.1 División de ventanas</h2><ul><li><b>Limitar ventanas:</b> evitá el máximo; usá diseños 2x2 o 3x3 acordes a tu equipo.</li><li><b>Cerrar cámaras no esenciales</b> que no necesiten monitoreo activo.</li></ul>'+img("hc_substream")+
+'<h2>5.2 Tipo de transmisión (Stream Type)</h2><p>Configurá el <b>sub-stream</b> por defecto en lugar del main-stream, sobre todo con muchas divisiones. Verificalo en la barra de control o en los ajustes del sistema.</p><div class="note">El main-stream solo debe usarse a pantalla completa o en la cámara que requiera máxima claridad.</div>'+
+'<h2>5.3 Decodificación y renderizado</h2><ul><li><b>Decodificación por hardware (GPU):</b> si tu tarjeta gráfica lo soporta, activala. Ruta: <code>System &gt; Basic Video &gt; Display &gt; GPU Hardware Decoding</code>.</li><li><b>Ajustar FPS:</b> bajarlos levemente reduce carga sin perder demasiada fluidez.</li></ul><div class="note">Esta configuración aplica solo a la visualización del cliente; no afecta la grabación del servidor.</div>'+
+'<h2>5.4 Recursos del sistema</h2><ul><li>Actualizá los controladores de la tarjeta gráfica.</li><li>Verificá que CPU, RAM y GPU cumplan los requisitos mínimos del cliente para la cantidad de transmisiones.</li></ul>'},
+{m:"a",n:"6",t:"Playback (grabaciones)",h:
+'<p>Permite buscar, visualizar y exportar grabaciones almacenadas en el servidor. Clic en <b>Playback</b> en la barra principal.</p>'+img("hc_playback")+
+'<h2>6.1 Búsqueda y visualización</h2><p>Arrastrá las cámaras al área de visualización y usá calendario y línea de tiempo para elegir fecha y hora. La línea muestra bloques de color según disponibilidad (continua, por evento).</p>'+
+'<h2>6.2 Iniciar reproducción</h2><p>Clic en <b>Play</b> o mové el cursor de la línea de tiempo.</p><ul><li><b>Pausa/Detener</b></li><li><b>Avance / reversa rápida</b></li><li><b>Cuadro por cuadro</b> (análisis detallado)</li><li><b>Zoom digital</b> sobre una sección</li></ul>'+
+'<h2>6.3 Explorar fechas de registros</h2><ol><li>Ubicá calendario y línea de tiempo (arriba o abajo del área de video).</li><li>Clic en el ícono de <b>Calendario</b> para ver el mes.</li><li>Los días con grabación aparecen resaltados (color, círculo o punto).</li><li>Clic en la fecha: se carga la línea de tiempo de ese día (24 h).</li><li>Mové el indicador para elegir la hora exacta. Colores: verde = continua, amarillo/naranja = evento/movimiento.</li></ol>'+
+'<table><tr><th>Característica</th><th>Propósito</th></tr><tr><td>Calendario</td><td>Navegación rápida entre días para ver cuándo hay videos.</td></tr><tr><td>Días resaltados</td><td>Indican días con material grabado en el servidor.</td></tr><tr><td>Línea de tiempo</td><td>Muestra las 24 h del día con segmentos por color según tipo de grabación.</td></tr></table>'},
+{m:"a",n:"6.4",t:"Exportar video y capturas",h:
+'<p>Permite guardar segmentos de video o imágenes como archivos locales.</p>'+img("hc_export")+
+'<h2>Exportar un segmento</h2><ol><li><b>Seleccionar el segmento:</b> en Playback usá la herramienta <b>Clip/Recorte</b> (tijeras o corchete) y marcá punto de inicio y final.</li><li>Clic en <b>Exportar</b>.</li><li><b>Formato:</b> MP4, AVI o EXE/propietario (puede requerir reproductor específico). MP4 admite contraseña.</li><li><b>Ruta de guardado:</b> carpeta de tu disco local.</li><li><b>Opciones adicionales:</b> marca de tiempo (watermark) para autenticidad.</li><li>Confirmá con <b>Save/Exportar</b>; verás una barra de progreso.</li></ol>'+
+'<h2>Exportar capturas (Snapshot)</h2><ol><li>En vivo o en Playback, detené la imagen en el momento deseado.</li><li>Clic en <b>Captura de imagen</b> en la barra de control.</li><li>Se guarda en la carpeta predeterminada o se te pedirá ubicación y formato (JPG, PNG).</li></ol>'},
+{m:"a",n:"7",t:"Detección de movimiento",h:
+'<p>Función de análisis que, en Playback, ayuda a ubicar rápido eventos específicos (<b>cuadros verdes dinámicos</b>).</p>'+img("hc_movimiento")+
+'<h2>7.1 Resaltado en Playback</h2><p>Habilitar el resaltado permite distinguir en la línea de tiempo los segmentos por movimiento de las grabaciones continuas.</p>'+
+'<table><tr><th>Configuración</th><th>Detalle</th></tr><tr><td><b>Ruta</b></td><td><code>System &gt; Basic Video &gt; Display &gt; Enable Highlight</code></td></tr><tr><td><b>Acción</b></td><td>Activá o desactivá <b>Enable Highlight</b> para ver la detección de movimiento.</td></tr></table>'+img("hc_config_display")},
+{m:"a",n:"8",t:"Errores comunes",err:1,h:
+'<p>Errores más comunes y de autogestión. Tocá cada uno para ver causa y solución, o buscá por código.</p>'+
+'<h2>8.1 Usuario y contraseña</h2>'+
+err("VSM 40850","Usuario o contraseña incorrectos","La combinación es incorrecta (5 intentos). Las contraseñas FCITY están vinculadas al usuario personal: al cambiarla, hay que actualizarla manualmente en HikCentral. Si el usuario está bloqueado o no habilitado, aparece el mismo error.","Validá tus credenciales y probá si funcionan en otros servicios de Farmacity. Si está bloqueado, pedí el desbloqueo a la mesa de ayuda correspondiente, o solicitá por ticket el alta para HikCentral.","hc_err_40850")+
+'<h2>8.2 Código de verificación</h2>'+
+err("VSM 210","Falta código de verificación","No se ingresó el código. Puede aparecer tras varias contraseñas incorrectas.","Ingresá el código que aparece bajo el campo de contraseña.","hc_err_captcha")+
+err("VSM 212","Código de verificación expirado","Se tardó demasiado en ingresarlo o no se refrescó la imagen.","Hacé clic en la imagen del código para generar uno nuevo e ingresalo.")+
+err("VSM 211","Código de verificación inválido","Se ingresó un código incorrecto.","Refrescá la imagen y escribí correctamente el código.")+
+'<h2>8.3 Cuenta</h2>'+
+err("VSM 41050","Cuenta bloqueada en la IP","Se escribió la contraseña incorrecta 5 veces. El bloqueo es temporal: 10 minutos.","Esperá que pase el bloqueo y reintentá con las credenciales correctas.")+
+err("VSM 266","Contraseña no inicializada","El usuario local aún no cambió la contraseña inicial.","Cambiá la contraseña para poder acceder.")+
+err("VSM 207","Usuario expirado","El usuario local venció su tiempo de autorización.","Si tenés cuenta Farmacity, ingresá como usuario de dominio. En cualquier otro caso, cargá un ticket a la mesa de ayuda de seguridad electrónica.")+
+'<h2>8.4 Servidor</h2>'+
+err("BeeNet 167772427","Servidor no configurado","Aún no se configuró la dirección IP y el puerto 443.","Configurá correctamente la dirección del servidor y el puerto en la pantalla de inicio de sesión.")+
+err("Error -3","Tiempo de conexión agotado","Error de red de la PC/notebook, o la dirección de servidor es incorrecta.","1) Verificá que estés en internet y en la red corporativa (cableada, VPN o WLAN-TIS). 2) En Show Server Address verificá que los datos sean correctos.")+
+err("Error 10061","Servidor denegó el inicio de sesión","No se estableció la dirección/puertos correctos, o el servidor está fuera de línea.","Verificá y corregí los parámetros de inicio. Consultá con compañeros de sector si el problema es general.")},
+
+/* ---------- MANUAL B: TV DE SALÓN ---------- */
+{m:"b",n:"1",t:"Inicio de sesión en el decoder",h:
+'<p>Todas las funciones se operan con el <b>mouse</b> conectado al decoder de monitoreo de la TV de seguridad. Si no hay mouse, podés usar uno de marca propia de consumo interno y conectar el receptor en el <b>puerto USB delantero</b> del decoder.</p>'+img("tv_decoder")+
+'<h2>Iniciar sesión</h2><p>Para usar las funciones de operador, ingresá con el usuario designado para la tienda: <code>#Suc_Seguridad*</code> (donde <b>#Suc</b> es el número de tienda).</p>'+img("tv_login")},
+{m:"b",n:"2",t:"Expandir a pantalla completa",h:
+'<p>En la esquina inferior derecha se muestran: <b>Paginación</b>, <b>Conmutar cámaras</b>, <b>División de ventanas</b> y <b>Pantalla completa</b>.</p><ul><li>Usá <b>Pantalla completa</b> para que las cámaras ocupen todo el monitor y se oculte el menú.</li><li><b>Doble clic</b> sobre una cámara la amplía a pantalla completa.</li></ul><div class="note">Se requiere tener el usuario iniciado para esta opción.</div>'+img("tv_fullscreen")},
+{m:"b",n:"3",t:"Zoom digital",h:
+'<p>Al posar el puntero, cada cámara muestra botones de información del canal y acciones: <b>Reproducción instantánea, Zoom digital, Control PTZ, Activar audio, Flujo principal</b>.</p><ol><li>Clic en <b>Zoom digital</b> en la cámara elegida.</li><li>Usá el scroll del mouse: la cámara hace zoom en el sector donde está el puntero.</li></ol>'+img("tv_zoom1")+img("tv_zoom2")},
+{m:"b",n:"4",t:"Menú de acciones",h:
+'<p>Hacé <b>clic derecho</b> sobre cualquier cámara. Opciones comunes para el usuario de monitoreo:</p><ul>'+
+'<li><b>Pantalla individual:</b> muestra una sola cámara, la que elijas en la vista siguiente.</li>'+
+'<li><b>División de ventanas:</b> define el display del monitor en reposo (1*1, 2*2, 1+5, 1+7, 3*3, 4*4…). Conviene elegirlo según la cantidad de cámaras activas.</li>'+
+'<li><b>Pantalla anterior / siguiente:</b> cámara previa o siguiente según el orden de canal.</li>'+
+'<li><b>Iniciar conmutación automática:</b> rota automáticamente las cámaras activas.</li>'+
+'<li><b>Cámara:</b> define qué cámaras se muestran (solo administradores autorizados).</li>'+
+'<li><b>Reproducción:</b> permite ver el historial de grabaciones.</li></ul>'+img("tv_menu")},
+{m:"b",n:"5",t:"Reorganizar cámaras",h:
+'<p>Para cambiar el orden o la posición de las cámaras en la división de ventanas:</p><ol><li><b>Clic y mantené</b> el botón izquierdo sobre la cámara a mover.</li><li><b>Arrastrá la miniatura</b> hasta la posición deseada.</li><li><b>Soltá el botón.</b> La cámara se reubica y la que ocupaba ese lugar pasa a la posición anterior de la arrastrada.</li></ol>'+img("tv_reorder1")+img("tv_reorder2")}
+];
+
+var cur=0, mod="a", $=function(i){return document.getElementById(i)};
+function strip(h){return h.replace(/<[^>]+>/g," ").toLowerCase()}
+PAGES.forEach(function(p){p.s=(p.t+" "+strip(p.h)).toLowerCase()});
+
+function buildToc(){
+  var f=$("q").value.trim().toLowerCase(), out="";
+  PAGES.forEach(function(p,i){
+    if(f? p.s.indexOf(f)<0 : p.m!==mod) return;
+    out+='<a data-i="'+i+'" class="'+(i===cur?"on":"")+'"><small>'+(f?(p.m==="a"?"HC ":"TV "):"")+p.n+'</small>'+p.t+'</a>';
+  });
+  $("toc").innerHTML=out||'<p style="padding:10px;color:var(--mute)">Sin resultados.</p>';
+}
+function show(i){
+  cur=Math.max(0,Math.min(PAGES.length-1,i)); var p=PAGES[cur]; mod=p.m;
+  var el=$("page"); el.style.animation="none"; void el.offsetWidth; el.style.animation="";
+  el.innerHTML='<div class="kick">'+(p.m==="a"?"Manual HikCentral Profesional":"Manual TV de salón")+' · Capítulo '+p.n+'</div><h1>'+p.t+'</h1>'+p.h+FOOT;
+  $("scroll").scrollTop=0;
+  var same=PAGES.filter(function(x){return x.m===mod}), idx=same.indexOf(p)+1;
+  $("pos").textContent="Página "+idx+" de "+same.length;
+  $("prev").disabled=cur===0; $("next").disabled=cur===PAGES.length-1;
+  document.querySelectorAll(".tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.m===mod)});
+  buildToc(); $("side").classList.remove("open");
+  try{history.replaceState(null,"","#p"+cur)}catch(e){}
+}
+document.querySelector(".tabs").onclick=function(e){var m=e.target.dataset.m; if(!m)return; $("q").value=""; show(PAGES.findIndex(function(p){return p.m===m}))};
+$("toc").onclick=function(e){var a=e.target.closest("a"); if(a) show(+a.dataset.i)};
+$("q").oninput=buildToc;
+$("prev").onclick=function(){show(cur-1)}; $("next").onclick=function(){show(cur+1)};
+$("menu").onclick=function(){$("side").classList.toggle("open")};
+$("page").onclick=function(e){var b=e.target.closest(".err>button"); if(b){var d=b.parentNode; d.classList.toggle("open"); b.querySelector(".chip").textContent=d.classList.contains("open")?"–":"+"}};
+document.onkeydown=function(e){if(e.target.tagName==="INPUT")return; if(e.key==="ArrowRight")show(cur+1); if(e.key==="ArrowLeft")show(cur-1)};
+var h=parseInt((location.hash||"").replace("#p",""),10); show(isNaN(h)?0:h);
+</script>
+</body>
+</html>
